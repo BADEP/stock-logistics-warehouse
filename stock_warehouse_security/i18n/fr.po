@@ -20,26 +20,26 @@ msgid "Allowed Warehouses"
 msgstr "Entrepôts autorisés"
 
 #. module: stock_warehouse_security
-#: model:ir.model.fields,field_description:stock_warehouse_security.field_res_users__display_name
-msgid "Display Name"
-msgstr "Nom affiché"
-
-#. module: stock_warehouse_security
-#: model:ir.model.fields,field_description:stock_warehouse_security.field_res_users__id
-msgid "ID"
-msgstr "ID"
-
-#. module: stock_warehouse_security
-#: model:ir.model.fields,field_description:stock_warehouse_security.field_res_users____last_update
-msgid "Last Modified on"
-msgstr "Dernière modification le"
-
-#. module: stock_warehouse_security
 #: model_terms:ir.ui.view,arch_db:stock_warehouse_security.view_users_form
 msgid "Multi Warehouse"
 msgstr "Multi entrepôt"
 
 #. module: stock_warehouse_security
+#: model:ir.model,name:stock_warehouse_security.model_product_product
+msgid "Product Variant"
+msgstr ""
+
+#. module: stock_warehouse_security
 #: model:ir.model,name:stock_warehouse_security.model_res_users
-msgid "Users"
+#, fuzzy
+msgid "User"
 msgstr "Utilisateurs"
+
+#~ msgid "Display Name"
+#~ msgstr "Nom affiché"
+
+#~ msgid "ID"
+#~ msgstr "ID"
+
+#~ msgid "Last Modified on"
+#~ msgstr "Dernière modification le"
