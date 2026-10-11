@@ -166,7 +166,7 @@ class TestStockPickingVolume(TransactionCase):
                         {
                             "display_name": product2.name,
                             "product_id": product2.id,
-                            "product_uom": product2.uom_id.id,
+                            "uom_id": product2.uom_id.id,
                             "product_uom_qty": 5.0,
                             "location_id": self.loc_stock.id,
                             "location_dest_id": self.loc_customer.id,

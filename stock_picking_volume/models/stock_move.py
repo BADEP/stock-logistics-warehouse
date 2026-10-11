@@ -28,7 +28,7 @@ class StockMove(models.Model):
             product = move.product_id
             if product and product.type == "consu":
                 quantity = move._get_processible_quantity()
-                volume = product._get_volume_for_qty(quantity, move.product_uom)
+                volume = product._get_volume_for_qty(quantity, move.uom_id)
             else:
                 volume = 0
             if move.volume != volume:
