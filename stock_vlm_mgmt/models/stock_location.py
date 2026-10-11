@@ -66,7 +66,7 @@ class StockLocation(models.Model):
                 self.env._("No implemented request connector for this vendor!")
             )
         timeout = (
-            self.env["ir.config_parameter"].sudo().get_param("stock_vlm_mgmt.timeout")
+            self.env["ir.config_parameter"].sudo().get_str("stock_vlm_mgmt.timeout")
         )
         vlm_connector = getattr(self, f"_{self.vlm_vendor}_vlm_connector")()(
             self.vlm_hostname,

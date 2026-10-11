@@ -7,7 +7,7 @@ from odoo import api, fields, models
 class StockLocationVlmTrayType(models.Model):
     _name = "stock.location.vlm.tray.type"
     _description = "VLM Tray configuration"
-    _rec_names_search = ["name", "code"]
+    _rec_names_search = ("name", "code")
 
     active = fields.Boolean(default=True)
     name = fields.Char(required=True)

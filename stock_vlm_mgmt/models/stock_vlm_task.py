@@ -1,15 +1,15 @@
 # Copyright 2023 Tecnativa - David Vidal
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 from concurrent.futures import ThreadPoolExecutor, as_completed
+from typing import ClassVar
 
 from odoo import api, fields, models
 from odoo.exceptions import UserError
-from odoo.tools import float_compare, float_is_zero
 
 
 class VlmOperationTask(models.Model):
     _name = "stock.vlm.task"
-    _inherit = ["vlm.tray.cell.position.mixin"]
+    _inherit: ClassVar[list[str]] = ["vlm.tray.cell.position.mixin"]
     _description = "Vertical Lift Module task"
 
     display_name = fields.Char(compute="_compute_display_name")
@@ -47,7 +47,7 @@ class VlmOperationTask(models.Model):
             qty = task.quantity_pending if task.state != "done" else task.quantity_done
             task.display_name = (
                 f"{task.reference}: "
-                f"{task.task_type.capitalize()} {qty} "
+                f"{(task.task_type or '').capitalize()} {qty} "
                 f"{task.product_id.uom_id.name} of {task.product_id.display_name} "
                 f"{'in' if task.task_type == 'put' else 'from'} "
                 f"{task.location_id.name} ⇨ TRAY {task.tray_id.name}"
@@ -56,10 +56,10 @@ class VlmOperationTask(models.Model):
     def action_command_task_threaded(self):
         # TODO: Not working, fails on environment or cursor things. Not usable
         with api.Environment.manage(), self.pool.cursor() as new_cr:
-            self = self.with_env(self.env(cr=new_cr))
+            tasks = self.with_env(self.env(cr=new_cr))
             with ThreadPoolExecutor() as executor:
                 futures = []
-                for task in self:
+                for task in tasks:
                     futures.append(executor.submit(task.action_command_task))
                 for future in as_completed(futures):
                     yield future.result()
@@ -84,10 +84,8 @@ class VlmOperationTask(models.Model):
 
     def _post_command(self, quantity_done):
         """What to do depending on the VLM response"""
-        quantity_compare = float_compare(
-            quantity_done,
-            self.quantity_pending,
-            precision_rounding=self.product_id.uom_id.rounding,
+        quantity_compare = self.product_id.uom_id.compare(
+            quantity_done, self.quantity_pending
         )
         # There could be several cases:
         # A) The done quantity is equal to the task quantity: task is done
@@ -100,11 +98,9 @@ class VlmOperationTask(models.Model):
         # B) The done quantity is lower than the task quantity:
         #   - Was the tray full?: propose another task
         #   - TODO: The quantity couldn't be fulfilled: the picking was wrong
-        elif quantity_compare < 0:
+        if quantity_compare < 0:
             # Return it as it is
-            if float_is_zero(
-                quantity_done, precision_rounding=self.product_id.uom_id.rounding
-            ):
+            if self.product_id.uom_id.is_zero(quantity_done):
                 return ("zero_quantity", self)
             # Add an extra task for the remaining quantity and launch the wizard
             # so the user decides where to put them
@@ -114,7 +110,7 @@ class VlmOperationTask(models.Model):
             return ("split", new_task)
         # C) Then done quantity is higher:
         #   - TODO: Was the picking was wrong?
-        elif quantity_compare > 0:
+        if quantity_compare > 0:
             # Show the issue to the user
             if not self.env.context.get("skip_vlm_mismatch"):
                 return (
@@ -125,6 +121,7 @@ class VlmOperationTask(models.Model):
             # to match with the quant!
             self._set_done(quantity_done)
             self._update_quantities()
+        return None
 
     def _set_done(self, quantity_done=None):
         quantity_done = quantity_done or self.quantity_pending

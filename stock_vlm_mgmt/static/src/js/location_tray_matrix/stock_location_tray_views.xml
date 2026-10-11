@@ -3,11 +3,11 @@
     <t t-name="stock_vlm_mgmt.stock_vlm_mgmt_location_tray_matrix" owl="1">
         <t
             t-set="cell_min_width"
-            t-value="state.matrix.cells.length and (100 / state.matrix.cells[0].length) or 0"
+            t-value="this.state.matrix?.cells?.length and (100 / this.state.matrix.cells[0].length) or 0"
         />
         <table class="table-responsibe table-bordered text-center bg-light w-100">
             <tbody>
-                <t t-foreach="state.matrix.cells" t-as="row" t-key="row_index">
+                <t t-foreach="this.state.matrix?.cells or []" t-as="row" t-key="row_index">
                     <tr>
                         <t t-foreach="row" t-as="cell" t-key="cell_index">
                             <t
@@ -16,12 +16,12 @@
                             />
                             <t
                                 t-set="is_selected"
-                                t-value="state.matrix.selected.toString() === cell_coordinates.toString()"
+                                t-value="(this.state.matrix.selected or '').toString() === cell_coordinates.toString()"
                             />
                             <td
                                 t-att-data-coordinates="cell_coordinates"
                                 t-attf-class="{{cell ? 'bg-success' : ''}} {{cell ? 'text-success' : 'text-light'}} {{is_selected ? 'border-warning border-3' : ''}}"
-                                t-on-click="onClickCell"
+                                t-on-click="this.onClickCell"
                                 role="button"
                             >·</td>
                         </t>
