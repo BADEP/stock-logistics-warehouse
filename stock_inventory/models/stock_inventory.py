@@ -322,7 +322,6 @@ class InventoryAdjustmentsGroup(models.Model):
                 "current_inventory_id": self.id,
             }
         )
-        return
 
     def action_state_to_done(self):
         self.ensure_one()
@@ -337,13 +336,11 @@ class InventoryAdjustmentsGroup(models.Model):
                 "current_inventory_id": False,
             }
         )
-        return
 
     def action_auto_state_to_done(self):
         self.ensure_one()
         if not any(self.stock_quant_ids.filtered(lambda sq: sq.to_do)):
             self.action_state_to_done()
-        return
 
     def action_state_to_draft(self):
         self.ensure_one()
@@ -359,7 +356,6 @@ class InventoryAdjustmentsGroup(models.Model):
             }
         )
         self.stock_quant_ids = None
-        return
 
     def action_state_to_cancel(self):
         self.ensure_one()
