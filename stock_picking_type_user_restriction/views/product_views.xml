@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8" ?>
+<?xml version="1.0" encoding="UTF-8" ?>
 <odoo>
     <record id="view_template_property_form_assigned_users" model="ir.ui.view">
         <field name="name">view_template_property_form_assigned_users</field>
@@ -14,7 +14,7 @@
             </page>
         </field>
     </record>
-    <record model="ir.ui.view" id="product_form_view_procurement_button">
+    <record id="product_form_view_procurement_button" model="ir.ui.view">
         <field name="name">product.product.procurement</field>
         <field name="model">product.product</field>
         <field name="inherit_id" ref="stock.product_form_view_procurement_button" />
@@ -28,7 +28,7 @@
             </xpath>
         </field>
     </record>
-    <record model="ir.ui.view" id="product_form_view_procurement_button_assigned_users">
+    <record id="product_form_view_procurement_button_assigned_users" model="ir.ui.view">
         <field name="name">product_form_view_procurement_button_assigned_users</field>
         <field name="model">product.product</field>
         <field name="inherit_id" ref="stock.product_form_view_procurement_button" />
@@ -45,7 +45,7 @@
             </xpath>
         </field>
     </record>
-    <record model="ir.ui.view" id="product_template_form_view_procurement_button">
+    <record id="product_template_form_view_procurement_button" model="ir.ui.view">
         <field name="name">product.template_procurement</field>
         <field name="model">product.template</field>
         <field
