@@ -7,9 +7,7 @@ class InventoryAdjustmentsGroup(models.Model):
     _name = "stock.inventory"
     _description = "Inventory Adjustment Group"
     _order = "date desc, id desc"
-    _inherit = [
-        "mail.thread",
-    ]
+    _inherit = "mail.thread"
 
     name = fields.Char(
         required=True,
@@ -44,7 +42,6 @@ class InventoryAdjustmentsGroup(models.Model):
 
     owner_id = fields.Many2one(
         "res.partner",
-        "Owner",
         help="This is the owner of the inventory adjustment",
         readonly=True,
     )
@@ -135,7 +132,6 @@ class InventoryAdjustmentsGroup(models.Model):
         comodel_name="product.product",
         compute="_compute_products_under_review_ids",
         search="_search_products_under_review_ids",
-        string="Products Under Review",
         relation="stock_inventory_product_review_rel",
     )
 

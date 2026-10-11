@@ -7,6 +7,8 @@ from odoo.addons.base.tests.common import BaseCommon
 
 
 class TestStockInventory(BaseCommon):
+    _test_user_groups = None
+
     def setUp(self):
         super().setUp()
         self.env.company.stock_inventory_auto_complete = False
