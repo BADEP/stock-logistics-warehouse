@@ -181,7 +181,7 @@ class TestStockCommon(TransactionCase):
             {
                 "product_id": cls.product.id,
                 "product_uom_qty": 5.0,
-                "product_uom": cls.product.uom_id.id,
+                "uom_id": cls.product.uom_id.id,
                 "picking_id": picking.id,
                 "location_id": location_src.id,
                 "location_dest_id": location_dest.id,

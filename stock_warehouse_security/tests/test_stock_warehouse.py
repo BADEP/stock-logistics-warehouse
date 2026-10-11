@@ -27,10 +27,8 @@ class TestStockWarehouseAccess(TestStockCommon):
         warehouses = self.env["stock.warehouse"].search([])
         self.assertTrue(
             all(
-                [
-                    wh in warehouses
-                    for wh in (self.warehouse_1 | self.warehouse_2 | self.warehouse_3)
-                ]
+                wh in warehouses
+                for wh in (self.warehouse_1 | self.warehouse_2 | self.warehouse_3)
             )
         )
 
@@ -39,5 +37,5 @@ class TestStockWarehouseAccess(TestStockCommon):
         """I must be able to read other warehouse to set my preferred warehouse"""
         warehouses = self.env["stock.warehouse"].search([])
         self.assertTrue(
-            all([wh in warehouses for wh in (self.warehouse_1 | self.warehouse_2)])
+            all(wh in warehouses for wh in (self.warehouse_1 | self.warehouse_2))
         )
