@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8" ?>
+<?xml version="1.0" encoding="UTF-8" ?>
 <templates>
     <t
         t-name="VlmTaskRequestListView.buttons"
@@ -9,8 +9,8 @@
         <xpath expr="//div[hasclass('o_list_buttons')]" position="inside">
             <button
                 t-if="nbSelected"
-                type="button"
                 class="btn btn-secondary"
+                type="button"
                 t-on-click="onClickVlmRequest"
             >
                 <i
