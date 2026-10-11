@@ -43,7 +43,7 @@ class TestsCommon(BaseCommon):
         )
         cls.uom_unit = cls.env.ref("uom.product_uom_unit")
         cls.product_no_lots = cls.product_obj.create(
-            {"name": "Pineapple", "is_storable": True, "tracking": "none"}
+            {"name": "Pineapple", "is_storable": True, "tracking": False}
         )
         cls.product_lots = cls.product_obj.create(
             {"name": "Apple", "is_storable": True, "tracking": "lot"}

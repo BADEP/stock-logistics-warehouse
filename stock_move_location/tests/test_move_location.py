@@ -8,6 +8,8 @@ from .test_common import TestsCommon
 
 
 class TestMoveLocation(TestsCommon):
+    _test_user_groups = None
+
     @classmethod
     def setUpClass(cls):
         super().setUpClass()
@@ -83,7 +85,7 @@ class TestMoveLocation(TestsCommon):
         """Test a product that have existing quants with undefined quantity."""
 
         product_not_available = self.env["product.product"].create(
-            {"name": "Mango", "is_storable": True, "tracking": "none"}
+            {"name": "Mango", "is_storable": True, "tracking": False}
         )
         self.quant_obj.create(
             {
@@ -287,7 +289,7 @@ class TestMoveLocation(TestsCommon):
             {
                 "product_id": self.product_lots.id,
                 "product_uom_qty": 20.0,
-                "product_uom": self.product_lots.uom_id.id,
+                "uom_id": self.product_lots.uom_id.id,
                 "location_id": delivery_picking.location_id.id,
                 "location_dest_id": delivery_picking.location_dest_id.id,
                 "picking_id": delivery_picking.id,
@@ -314,7 +316,7 @@ class TestMoveLocation(TestsCommon):
             {
                 "product_id": self.product_lots.id,
                 "product_uom_qty": 100.0,
-                "product_uom": self.product_lots.uom_id.id,
+                "uom_id": self.product_lots.uom_id.id,
                 "location_id": internal_picking.location_id.id,
                 "location_dest_id": internal_picking.location_dest_id.id,
                 "picking_id": internal_picking.id,
