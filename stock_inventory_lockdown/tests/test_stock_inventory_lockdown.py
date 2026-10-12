@@ -8,6 +8,8 @@ from odoo.addons.stock.tests.common import TestStockCommon
 
 
 class StockInventoryLocationTest(TestStockCommon):
+    _test_user_groups = None
+
     @classmethod
     def setUpClass(cls):
         super().setUpClass()
