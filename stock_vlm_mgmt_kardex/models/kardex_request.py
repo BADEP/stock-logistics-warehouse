@@ -76,9 +76,7 @@ class KardexRequest:
         """
         parsed_data = dict.fromkeys(KARDEX_KEYS, None)
         try:
-            parsed_data.update(
-                {k: v for k, v in zip(KARDEX_KEYS, data.split(";"), strict=False)}
-            )
+            parsed_data.update(dict(zip(KARDEX_KEYS, data.split(";"), strict=False)))
         except Exception:
             _logger.debug(f"Exception parsing data: {data}")
         if parsed_data.get("qty"):
@@ -109,7 +107,7 @@ class KardexRequest:
         _logger.info(f"Request: {data}")
         operation_id = self.parse_data(data).get("task_id")
         if not operation_id:
-            return
+            return None
         data = data.encode("utf-8")
         with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as device:
             try:
