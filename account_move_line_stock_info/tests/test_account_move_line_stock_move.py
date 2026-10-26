@@ -60,7 +60,7 @@ class TestAccountMoveLineStockInfo(TransactionCase):
     def _create_user(self, login, groups, company):
         """Create a user."""
         group_ids = [group.id for group in groups]
-        user = self.res_users_model.with_context(**{"no_reset_password": True}).create(
+        user = self.res_users_model.with_context(no_reset_password=True).create(
             {
                 "name": "Test User",
                 "login": login,
@@ -68,7 +68,7 @@ class TestAccountMoveLineStockInfo(TransactionCase):
                 "email": "test@yourcompany.com",
                 "company_id": company.id,
                 "company_ids": [(4, company.id)],
-                "groups_id": [(6, 0, group_ids)],
+                "group_ids": [(6, 0, group_ids)],
             }
         )
         return user.id
