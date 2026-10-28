@@ -1,9 +1,9 @@
 # Copyright 2023 Tecnativa - David Vidal
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
+
 from odoo import api, fields, models
 from odoo.exceptions import UserError
 from odoo.fields import Domain
-from odoo.tools.float_utils import float_compare, float_round
 
 
 class StockQuant(models.Model):
@@ -30,7 +30,7 @@ class StockQuant(models.Model):
 
 class StockQuantVlm(models.Model):
     _name = "stock.quant.vlm"
-    _inherit = ["vlm.tray.cell.position.mixin"]
+    _inherit = ["vlm.tray.cell.position.mixin"]  # noqa: RUF012
     _description = "Vertical Lift Module structure inside the quant"
     _rec_name = "product_id"
 
@@ -58,7 +58,7 @@ class StockQuantVlm(models.Model):
         for vlm_quant in self.filtered(
             lambda x: x.product_id.type == "consu" and x.product_id.is_storable
         ):
-            rounding = vlm_quant.product_id.uom_id.rounding
+            uom = vlm_quant.product_id.uom_id
             # TODO: Support lots and other quant stuff
             quant = vlm_quant.quant_id or vlm_quant.quant_id.search(
                 [
@@ -68,10 +68,8 @@ class StockQuantVlm(models.Model):
                 limit=1,
             )
             quant_quantity = quant.quantity
-            diff = float_round(
-                inventory_quantity - vlm_quant.quantity, precision_rounding=rounding
-            )
-            diff_float_compared = float_compare(diff, 0, precision_rounding=rounding)
+            diff = uom.round(inventory_quantity - vlm_quant.quantity)
+            diff_float_compared = uom.compare(diff, 0)
             # When we create a new record, the diff would be 0
             if skip_diff:
                 diff = diff_float_compared = inventory_quantity

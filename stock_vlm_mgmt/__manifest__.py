@@ -3,7 +3,7 @@
 {
     "name": "Vertical Lift Module management",
     "summary": "Light self contained alternative for VLM integrations",
-    "version": "19.0.1.0.0",
+    "version": "20.0.1.0.0",
     "author": "Tecnativa, Odoo Community Association (OCA)",
     "website": "https://github.com/OCA/stock-logistics-warehouse",
     "maintainers": ["chienandalu"],
@@ -11,7 +11,6 @@
     "category": "Stock",
     "depends": ["stock", "base_sparse_field"],
     "data": [
-        "security/ir.model.access.csv",
         "views/stock_location_vlm_tray_views.xml",
         "views/stock_location_views.xml",
         "views/stock_picking_views.xml",
@@ -20,6 +19,7 @@
         "views/stock_quant_vlm_views.xml",
         "views/stock_location_tray_type_views.xml",
         "wizards/stock_vlm_task_action_views.xml",
+        "security/ir.access.csv",
     ],
     "assets": {
         "web.assets_backend": [

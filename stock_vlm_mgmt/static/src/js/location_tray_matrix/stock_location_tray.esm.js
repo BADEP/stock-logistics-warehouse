@@ -1,25 +1,23 @@
 /* Copyright 2024 Tecnativa - David Vidal
    License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl).*/
-import {Component, useEffect, useState} from "@odoo/owl";
+import {Component, proxy, t, useProps} from "@odoo/owl";
 import {registry} from "@web/core/registry";
+import {useLayoutEffect} from "@web/owl2/utils";
 import {standardFieldProps} from "@web/views/fields/standard_field_props";
 import {useService} from "@web/core/utils/hooks";
 
 export class LocationTrayMatrixField extends Component {
   static template = "stock_vlm_mgmt.stock_vlm_mgmt_location_tray_matrix";
-  static props = {
+  props = useProps({
     ...standardFieldProps,
-    click_action: {
-      type: String,
-      optional: true,
-    },
-  };
+    click_action: t.string().optional(),
+  });
   setup() {
     super.setup();
-    this.state = useState({matrix: this.props.record.data[this.props.name]});
+    this.state = proxy({matrix: this.props.record.data[this.props.name]});
     this.orm = useService("orm");
     this.action = useService("action");
-    useEffect(
+    useLayoutEffect(
       () => {
         this.state.matrix = this.props.record.data[this.props.name];
       },

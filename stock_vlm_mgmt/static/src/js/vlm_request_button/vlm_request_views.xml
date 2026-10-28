@@ -6,12 +6,12 @@
         t-inherit-mode="primary"
         owl="1"
     >
-        <xpath expr="//div[hasclass('o_list_buttons')]" position="inside">
+        <xpath expr="." position="inside">
             <button
-                t-if="nbSelected"
+                t-if="this.hasSelectedRecords"
                 class="btn btn-secondary"
                 type="button"
-                t-on-click="onClickVlmRequest"
+                t-on-click="this.onClickVlmRequest"
             >
                 <i
                 class="fa fa-rocket"
