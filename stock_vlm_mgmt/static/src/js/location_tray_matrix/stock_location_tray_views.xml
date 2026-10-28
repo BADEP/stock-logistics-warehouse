@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8" ?>
+<?xml version="1.0" encoding="UTF-8" ?>
 <templates>
     <t t-name="stock_vlm_mgmt.stock_vlm_mgmt_location_tray_matrix" owl="1">
         <t
