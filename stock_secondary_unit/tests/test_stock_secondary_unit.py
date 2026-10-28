@@ -8,6 +8,8 @@ from odoo.addons.base.tests.common import BaseCommon
 
 @tagged("-at_install", "post_install")
 class TestProductSecondaryUnit(BaseCommon):
+    _test_user_groups = None
+
     @classmethod
     def setUpClass(cls):
         super().setUpClass()
@@ -19,7 +21,6 @@ class TestProductSecondaryUnit(BaseCommon):
         cls.location_stock = cls.env.ref("stock.stock_location_stock")
         cls.picking_type_in = cls.env.ref("stock.picking_type_in")
         cls.picking_type_out = cls.env.ref("stock.picking_type_out")
-        cls.picking_type_out.show_operations = True
 
         cls.product_uom_kg = cls.env.ref("uom.product_uom_kgm")
         cls.product_uom_ton = cls.env.ref("uom.product_uom_ton")
@@ -115,7 +116,7 @@ class TestProductSecondaryUnit(BaseCommon):
         move_vals = {
             "product_id": product1.id,
             "secondary_uom_id": product1.product_tmpl_id.secondary_uom_ids[0].id,
-            "product_uom": product1.uom_id.id,
+            "uom_id": product1.uom_id.id,
             "product_uom_qty": 10.0,
             "location_id": self.location_supplier.id,
             "location_dest_id": self.location_stock.id,
@@ -167,14 +168,14 @@ class TestProductSecondaryUnit(BaseCommon):
             move.secondary_uom_qty = 1
             move.secondary_uom_id = product.product_tmpl_id.secondary_uom_ids[2]
             self.assertEqual(move.product_uom_qty, 10)
-            move.product_uom = self.product_uom_ton
+            move.uom_id = self.product_uom_ton
             self.assertAlmostEqual(move.secondary_uom_qty, 1000, 2)
 
         picking = picking_form.save()
         picking.action_confirm()
         stock_move_line = picking.move_line_ids
         stock_move_line.product_id = product
-        stock_move_line.product_uom_id = stock_move_line.product_id.uom_id.id
+        stock_move_line.uom_id = stock_move_line.product_id.uom_id.id
         stock_move_line.secondary_uom_qty = 1
         stock_move_line.secondary_uom_id = product.product_tmpl_id.secondary_uom_ids[0]
         self.assertEqual(stock_move_line.quantity, 0.5)

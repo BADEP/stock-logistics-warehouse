@@ -1,14 +1,15 @@
 # Copyright 2018 Tecnativa - Sergio Teruel
 # License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl).
+
 from odoo import api, fields, models
 
 
 class StockMove(models.Model):
-    _inherit = ["stock.move", "product.secondary.unit.mixin"]
+    _inherit = ["stock.move", "product.secondary.unit.mixin"]  # noqa: RUF012
     _name = "stock.move"
-    _secondary_unit_fields = {
+    _secondary_unit_fields = {  # noqa: RUF012
         "qty_field": "product_uom_qty",
-        "uom_field": "product_uom",
+        "uom_field": "uom_id",
     }
 
     product_uom_qty = fields.Float(
@@ -24,7 +25,7 @@ class StockMove(models.Model):
     def _compute_product_uom_qty(self):
         self._compute_helper_target_field_qty()
 
-    @api.onchange("product_uom")
+    @api.onchange("uom_id")
     def onchange_product_uom_for_secondary(self):
         self._onchange_helper_product_uom_for_secondary()
 
@@ -45,9 +46,12 @@ class StockMove(models.Model):
 
 
 class StockMoveLine(models.Model):
-    _inherit = ["stock.move.line", "product.secondary.unit.mixin"]
+    _inherit = ["stock.move.line", "product.secondary.unit.mixin"]  # noqa: RUF012
     _name = "stock.move.line"
-    _secondary_unit_fields = {"qty_field": "quantity", "uom_field": "product_uom_id"}
+    _secondary_unit_fields = {  # noqa: RUF012
+        "qty_field": "quantity",
+        "uom_field": "uom_id",
+    }
 
     quantity = fields.Float(
         store=True, readonly=False, compute="_compute_quantity", precompute=True
