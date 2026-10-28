@@ -1,7 +1,6 @@
 # Copyright 2023 Tecnativa - David Vidal
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 from concurrent.futures import ThreadPoolExecutor, as_completed
-from typing import ClassVar
 
 from odoo import api, fields, models
 from odoo.exceptions import UserError
@@ -9,7 +8,7 @@ from odoo.exceptions import UserError
 
 class VlmOperationTask(models.Model):
     _name = "stock.vlm.task"
-    _inherit: ClassVar[list[str]] = ["vlm.tray.cell.position.mixin"]
+    _inherit = ["vlm.tray.cell.position.mixin"]  # noqa: RUF012
     _description = "Vertical Lift Module task"
 
     display_name = fields.Char(compute="_compute_display_name")

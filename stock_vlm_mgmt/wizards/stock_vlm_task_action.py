@@ -1,6 +1,5 @@
 # Copyright 2023 Tecnativa - David Vidal
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
-from typing import ClassVar
 
 from odoo import api, fields, models
 from odoo.fields import Command
@@ -8,7 +7,7 @@ from odoo.fields import Command
 
 class VlmOperationTaskAction(models.TransientModel):
     _name = "stock.vlm.task.action"
-    _inherit: ClassVar[list[str]] = ["vlm.tray.cell.position.mixin"]
+    _inherit = ["vlm.tray.cell.position.mixin"]  # noqa: RUF012
     _description = "Actions to perform on vlm task exceptions"
 
     vlm_task_id = fields.Many2one(
