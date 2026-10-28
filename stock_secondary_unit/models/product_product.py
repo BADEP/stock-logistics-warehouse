@@ -1,12 +1,11 @@
 # Copyright 2018 Tecnativa - Sergio Teruel
 # License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl).
-from typing import ClassVar
 
 from odoo import fields, models
 
 
 class ProductProduct(models.Model):
-    _inherit: ClassVar[list[str]] = [
+    _inherit = [  # noqa: RUF012
         "product.product",
         "stock.product.secondary.unit.mixin",
     ]

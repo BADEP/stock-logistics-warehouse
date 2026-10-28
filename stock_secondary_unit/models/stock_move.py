@@ -1,14 +1,13 @@
 # Copyright 2018 Tecnativa - Sergio Teruel
 # License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl).
-from typing import ClassVar
 
 from odoo import api, fields, models
 
 
 class StockMove(models.Model):
-    _inherit: ClassVar[list[str]] = ["stock.move", "product.secondary.unit.mixin"]
+    _inherit = ["stock.move", "product.secondary.unit.mixin"]  # noqa: RUF012
     _name = "stock.move"
-    _secondary_unit_fields: ClassVar[dict[str, str]] = {
+    _secondary_unit_fields = {  # noqa: RUF012
         "qty_field": "product_uom_qty",
         "uom_field": "uom_id",
     }
@@ -47,9 +46,9 @@ class StockMove(models.Model):
 
 
 class StockMoveLine(models.Model):
-    _inherit: ClassVar[list[str]] = ["stock.move.line", "product.secondary.unit.mixin"]
+    _inherit = ["stock.move.line", "product.secondary.unit.mixin"]  # noqa: RUF012
     _name = "stock.move.line"
-    _secondary_unit_fields: ClassVar[dict[str, str]] = {
+    _secondary_unit_fields = {  # noqa: RUF012
         "qty_field": "quantity",
         "uom_field": "uom_id",
     }
